@@ -22,8 +22,8 @@ $(function () {
         socket.emit('changeUsername', { username: username.val() })
     })
 
-    message.bind("keypress", () => {
-        socket.emit('typing')
+    message.keypress(() => {
+        socket.emit('typing', username.val())
     })
 
     socket.on('typing', (data) => {
