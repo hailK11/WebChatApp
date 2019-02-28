@@ -7,7 +7,9 @@ app.get('/', (req, res) => {
     res.render('index')
 })
 
-server = app.listen(3000)
+const port = process.env.PORT || 3000
+
+server = app.listen(port)
 
 const io = require('socket.io')(server)
 
