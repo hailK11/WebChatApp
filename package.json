@@ -2,7 +2,7 @@
   "name": "webchatapp",
   "version": "1.0.0",
   "description": "Web Chat Application using Deffie-Hellman key exchange and AES encryption",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon app"
