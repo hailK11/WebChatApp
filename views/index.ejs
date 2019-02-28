@@ -4,30 +4,26 @@
 <head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
     <title>Web Chat App</title>
+    <link href="/styles.css" rel="stylesheet" />
 </head>
 
 <body>
-    <header>
-        <h1>Encrypted Web Chat</h1>
-    </header>
 
-    <section>
+    <div id='web-chat'>
+        <h2>Encrypted Web Chat</h2>
         <div id="changeUsername">
-            <input id="username" type="text" />
+            <input id="username" type="text" placeholder="Enter username" />
             <button id="sendUsername" type="button">Change username</button>
         </div>
-    </section>
-
-    <section id="chatroom">
-        <section id="feedback"></section>
-    </section>
-
-
-
-    <section id="input_zone">
-        <input id="message" class="vertical-align" type="text" />
-        <button id="sendMessage" class="vertical-align" type="button">Send</button>
-    </section>
+        <div id="chatroom">
+            <div id="output"></div>
+            <div id="feedback"></div>
+        </div>
+        <div id="input_zone">
+            <input id="message" class="vertical-align" type="text" placeholder="Enter message" />
+            <button id="sendMessage" class="vertical-align" type="button">Send</button>
+        </div>
+    </div>
 
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script src="chat.js"></script>
