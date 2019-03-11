@@ -1,5 +1,5 @@
 $(function () {
-    var socket = io({ transports: ['websocket'] })
+    var socket = io()
 
     var message = $("#message")
     var username = $("#username")
