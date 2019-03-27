@@ -8,20 +8,22 @@ $(function () {
     var chatroom = $("#chatroom")
     var feedback = $("#feedback")
 
+    var X = 0
+    var q = 0
+
     sendMessage.click(function () {
         socket.emit('newMessage', { message: message.val() })
     })
 
     socket.on('initPublicKeys', (data) => {
-        var q = data.q
+        q = data.q
         var alpha = data.alpha
 
         var id = data.id
         var sockId = data.sockId
-        alert(sockId)
 
-        var X = Math.floor(Math.random() * q);
-        var Y = Math.pow(alpha, X) % q;
+        X = Math.floor(Math.random() * q)
+        var Y = Math.pow(alpha, X) % q
 
         socket.emit('updateYvals', { Yval: Y, id: id, sockId: sockId })
     })
@@ -44,7 +46,17 @@ $(function () {
         feedback.html("<p><i>" + data.username + " is typing a message..." + "</i></p>")
     })
 
-    socket.on('updateYvals', (data) => {
-        var K = Math.pow(Y1, X) % q;
+    socket.on('ComputeNextYval', (data) => {
+        var Yval = parseInt(data.Yval)
+        //alert('Received from ' + data.sourceClientId)
+        var newYval = Math.pow(Yval, X) % q
+        var ret = parseInt(data.ret) + 1
+
+        socket.emit('sendToNextClient', { newYval: newYval, ret: ret, clientId: data.destClientId })
+    })
+
+    socket.on('AESEncrypt', (data) => {
+        var key = parseInt(data.Yval)
+        alert('Key is ' + key)
     })
 })
