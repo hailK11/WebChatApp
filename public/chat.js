@@ -52,7 +52,9 @@ $(function () {
         var newYval = Math.pow(Yval, X) % q
         var ret = parseInt(data.ret) + 1
 
-        socket.emit('sendToNextClient', { newYval: newYval, ret: ret, clientId: data.destClientId })
+        setTimeout(function () {
+            socket.emit('sendToNextClient', { newYval: newYval, ret: ret, clientId: data.destClientId })
+        }, 2000);
     })
 
     socket.on('AESEncrypt', (data) => {

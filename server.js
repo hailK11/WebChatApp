@@ -87,16 +87,17 @@ io.on('connection', (socket) => {
         setTimeout(function () {
             while (tmp == numClients) {
                 for (var client in clients) {
-                    var currId = client.charAt(6)
+                    var nextId = 0
+                    var currId = parseInt(client.charAt(6))
                     var nextId = (currId + 1) % numClients
 
-                    console.log('Client' + currId + ' inside timeout')
+                    //console.log('Client' + currId + ' inside timeout')
                     console.log('Computenextval from upd sent to ' + 'Client' + nextId + ' from Client' + currId)
                     io.sockets.in('Client' + nextId).emit('ComputeNextYval', { Yval: clients[client]['Yval'], ret: 0, sourceClientId: 'Client' + currId, destClientId: 'Client' + nextId })
                 }
                 tmp = 0
             }
-        }, 6000)
+        }, 5000)
     })
 
     socket.on('sendToNextClient', (data) => {
@@ -105,8 +106,9 @@ io.on('connection', (socket) => {
         var ret = data.ret
         var clientId = data.clientId
         console.log("ClientID: " + clientId + " Ret: " + ret)
-        var clientNum = clientId.charAt(6)
+        var clientNum = parseInt(clientId.charAt(6))
         if (ret == (numClients - 1)) {
+            console.log('AESEncrypt sent to ' + clientId)
             io.sockets.in('Client' + clientNum).emit('AESEncrypt', { Yval: newYval, clientId: clientId })
         }
         else {
