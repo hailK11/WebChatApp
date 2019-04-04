@@ -65,6 +65,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on('newMessage', (data) => {
+        console.log("Username: " + socket.username + " Enc: " + data.message);
         io.sockets.emit('newMessage', { message: data.message, username: socket.username })
     })
 

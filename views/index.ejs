@@ -3,6 +3,7 @@
 
 <head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"></script>
     <title>Web Chat App</title>
     <link href="/styles.css" rel="stylesheet" />
 </head>
@@ -11,6 +12,7 @@
 
     <div id='web-chat'>
         <h2>Encrypted Web Chat</h2>
+        <div id="encKey"></div>
         <div id="changeUsername">
             <input id="username" type="text" placeholder="Enter username" />
             <button id="sendUsername" type="button">Change username</button>

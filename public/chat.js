@@ -1,18 +1,22 @@
 $(function () {
     var socket = io()
-
     var message = $("#message")
     var username = $("#username")
     var sendMessage = $("#sendMessage")
     var sendUsername = $("#sendUsername")
     var chatroom = $("#chatroom")
     var feedback = $("#feedback")
+    var encKey = $("#encKey")
 
     var X = 0
     var q = 0
+    var key = 0
 
     sendMessage.click(function () {
-        socket.emit('newMessage', { message: message.val() })
+        var encrypted = CryptoJS.AES.encrypt(message.val(), key);
+        //alert("Encrypted Value is :" + encrypted);
+        encrypted = encrypted.toString();
+        socket.emit('newMessage', { message: encrypted })
     })
 
     socket.on('initPublicKeys', (data) => {
@@ -31,7 +35,11 @@ $(function () {
     socket.on("newMessage", (data) => {
         feedback.html('')
         message.val('')
-        chatroom.append("<p class = 'message'>" + data.username + ": " + data.message + "</p")
+        var msg = data.message
+        msg = msg.toString();
+        var decrypted = CryptoJS.AES.decrypt(msg, key);
+        var dec = decrypted.toString(CryptoJS.enc.Utf8);
+        chatroom.append("<p class = 'message'>" + data.username + ": " + dec + "</p")
     })
 
     sendUsername.click(function () {
@@ -58,7 +66,8 @@ $(function () {
     })
 
     socket.on('AESEncrypt', (data) => {
-        var key = parseInt(data.Yval)
-        alert('Key is ' + key)
+        key = parseInt(data.Yval)
+        key = key.toString();
+        encKey.html("<p><i>" + "Encryption Key: " + key + "</i></p>")
     })
 })
